@@ -109,13 +109,13 @@ test('panel fits on a small phone and above the button', async () => {
   await p.close()
 })
 
-test('axe: no WCAG 2.1 A/AA violations with the panel open (both variants)', async () => {
+test('axe: no WCAG 2.1 A/AA or best-practice violations with the panel open (both variants)', async () => {
   for (const variant of ['white', 'black']) {
     const p = await open({ ...SETTINGS, variant })
     await p.click('.wab')
     await p.waitForTimeout(250)
     await p.addScriptTag({ content: axe })
-    const res = await p.evaluate(() => window.axe.run(document, { runOnly: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'] }))
+    const res = await p.evaluate(() => window.axe.run(document, { runOnly: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice'] }))
     const v = res.violations.map((x) => `${x.id}: ${x.nodes.map((n) => n.target.join(' ')).join(', ')}`)
     assert.deepEqual(v, [], variant)
     await p.close()

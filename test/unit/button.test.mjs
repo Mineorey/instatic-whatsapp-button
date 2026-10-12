@@ -106,3 +106,10 @@ test('dialog mode is idempotent', () => {
   assert.equal(processPage(once, s, {}).html, once)
   assert.equal(processPage(once, { ...s, enabled: false }, {}).html, PAGE)
 })
+
+test('button and panel sit in a labelled complementary landmark', () => {
+  for (const mode of ['direct', 'dialog']) {
+    const html = processPage(PAGE, { phone: '+49301234567', mode }, {}).html
+    assert.match(html, /<!-- wab:start --><aside class="wab-region" aria-label="WhatsApp-Kontakt"><a class="wab [\s\S]*<\/aside><!-- wab:end -->/, mode)
+  }
+})

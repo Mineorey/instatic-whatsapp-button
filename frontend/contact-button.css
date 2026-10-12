@@ -19,6 +19,9 @@
   .wab--medium { --wab-size: 56px; }
 }
 
+/* wrapper landmark: no box of its own, children are position: fixed */
+.wab-region { display: contents; }
+
 /* ---- Button (a.wab / .wab-panel prefix: beat site-wide button and [role=button] rules) */
 a.wab {
   bottom: max(var(--wab-gap), env(safe-area-inset-bottom));

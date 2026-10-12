@@ -120,14 +120,16 @@ export function buttonHtml(cfg, digits) {
   const href = escAttr(chatUrl(digits, cfg.message))
   const linkAttrs = (cfg.newTab ? ' target="_blank"' : '') + ' rel="noopener noreferrer" referrerpolicy="no-referrer"'
   const dialog = cfg.mode === 'dialog'
-  return MARK_START +
+  // complementary landmark, so the button is not content outside any region
+  // (axe best practice "region"); the aside itself has no box
+  return MARK_START + '<aside class="wab-region" aria-label="WhatsApp-Kontakt">' +
     `<a class="wab wab--${cfg.position} wab--${cfg.size} wab--${cfg.variant}" href="${href}"${linkAttrs}` +
     (dialog ? ' data-wab-panel="wab-panel"' : '') +
     // in dialog mode the trigger is named after the panel; the script adds
     // aria-haspopup/aria-expanded, without script it is still a fine link name
     ` aria-label="${escAttr(dialog ? cfg.dialogTitle : cfg.label)}" title="${escAttr(dialog ? cfg.dialogTitle : cfg.label)}">` + glyph('wab__icon') + '</a>' +
     (dialog ? panelHtml(cfg, href, linkAttrs) : '') +
-    MARK_END
+    '</aside>' + MARK_END
 }
 
 function slugOf(ctx) {

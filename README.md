@@ -76,7 +76,8 @@ If the number is invalid, no button is inserted and the plugin log says why.
 - Keyboard: Enter or Space opens the panel and moves focus into it; Tab reaches "Schließen" and the WhatsApp link; Escape closes it and returns focus to the button. Clicking outside or tabbing out also closes it. Ctrl/Cmd-click on the button still opens WhatsApp directly in a new tab.
 - `z-index: 50`, below typical navigation, menus, overlays and cookie banners.
 - Respects the iPhone safe area, `prefers-reduced-motion` and forced-colors mode; hidden when printing; robust against common site rules such as minimum sizes for `[role=button]` or border radii on `:focus-visible`.
-- Tested with axe-core: no WCAG 2.1 A/AA violations with the panel open.
+- Button and panel sit in their own landmark (`<aside aria-label="WhatsApp-Kontakt">`).
+- Tested with axe-core: no WCAG 2.1 A/AA or best-practice violations with the panel open.
 
 ## Development
 
