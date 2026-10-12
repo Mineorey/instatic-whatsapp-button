@@ -1,0 +1,195 @@
+{
+  "id": "filmorbit.whatsapp-button",
+  "name": "WhatsApp-Button",
+  "version": "1.1.0",
+  "apiVersion": 1,
+  "description": "Kleiner schwebender Click-to-Chat-Button (wa.me) auf allen Seiten, wahlweise mit kurzem Hinweis-Fenster vor dem Wechsel zu WhatsApp. Keine Verbindung zu WhatsApp vor dem Klick.",
+  "permissions": [
+    "frontend.assets",
+    "cms.hooks",
+    "cms.routes"
+  ],
+  "entrypoints": {
+    "server": "server/index.js"
+  },
+  "frontend": {
+    "assets": [
+      {
+        "kind": "style",
+        "href": "frontend/contact-button.css",
+        "placement": "head-end"
+      },
+      {
+        "kind": "script",
+        "src": "frontend/contact-button.js",
+        "placement": "body-end",
+        "strategy": "defer"
+      }
+    ]
+  },
+  "settings": [
+    {
+      "id": "enabled",
+      "type": "toggle",
+      "label": "Button anzeigen",
+      "default": true,
+      "description": "Änderungen an allen Einstellungen werden erst nach einem neuen Veröffentlichen sichtbar."
+    },
+    {
+      "id": "phone",
+      "type": "text",
+      "label": "WhatsApp-Nummer",
+      "placeholder": "+49 30 1234567",
+      "description": "Am besten international, z. B. +49 30 1234567. 0049… und 0… (mit Ländervorwahl unten) werden umgerechnet. Daraus entsteht https://wa.me/49301234567."
+    },
+    {
+      "id": "defaultCountry",
+      "type": "text",
+      "label": "Ländervorwahl für Nummern mit führender 0",
+      "default": "49"
+    },
+    {
+      "id": "message",
+      "type": "textarea",
+      "rows": 3,
+      "label": "Vorausgefüllte Nachricht (optional)",
+      "description": "Steht beim Öffnen schon im Eingabefeld; die Person kann sie ändern. Keine personenbezogenen Daten eintragen."
+    },
+    {
+      "id": "label",
+      "type": "text",
+      "label": "Beschriftung für Screenreader (Modus „Direkt“)",
+      "default": "Chat über WhatsApp öffnen (externer Dienst)"
+    },
+    {
+      "id": "mode",
+      "type": "select",
+      "label": "Verhalten beim Klick",
+      "default": "direct",
+      "description": "Mit Hinweis-Fenster öffnet sich zuerst ein kleines Chatfenster mit Ihrem Text und dem Link zu WhatsApp. Ohne JavaScript führt der Button immer direkt zu WhatsApp.",
+      "options": [
+        {
+          "label": "Direkt zu WhatsApp",
+          "value": "direct"
+        },
+        {
+          "label": "Erst Hinweis-Fenster zeigen",
+          "value": "dialog"
+        }
+      ]
+    },
+    {
+      "id": "dialogTitle",
+      "type": "text",
+      "label": "Hinweis-Fenster: Überschrift",
+      "default": "Kontakt über WhatsApp",
+      "description": "Dient auch als Beschriftung des Buttons für Screenreader."
+    },
+    {
+      "id": "dialogText",
+      "type": "textarea",
+      "rows": 5,
+      "label": "Hinweis-Fenster: Text",
+      "default": "Sie haben eine Frage? Schreiben Sie uns über WhatsApp.\n\nMit dem Klick auf den Button verlassen Sie diese Website. WhatsApp ist ein Dienst von Meta.",
+      "description": "Leerzeile = neuer Absatz. Nur Text, kein HTML."
+    },
+    {
+      "id": "ctaLabel",
+      "type": "text",
+      "label": "Hinweis-Fenster: Link-Text",
+      "default": "Chat in WhatsApp öffnen"
+    },
+    {
+      "id": "privacyUrl",
+      "type": "text",
+      "label": "Hinweis-Fenster: Link zur Datenschutzerklärung (optional)",
+      "placeholder": "/datenschutz#whatsapp",
+      "description": "Pfad auf dieser Website (/…) oder https-Adresse. Leer = kein Link."
+    },
+    {
+      "id": "privacyLabel",
+      "type": "text",
+      "label": "Hinweis-Fenster: Text des Datenschutz-Links",
+      "default": "Hinweise zum Datenschutz"
+    },
+    {
+      "id": "variant",
+      "type": "select",
+      "label": "Farbvariante",
+      "default": "white",
+      "description": "Beide Varianten nutzen das offizielle WhatsApp-Glyph unverändert. Schwarz hat deutlich mehr Kontrast (ca. 9:1 statt 2:1).",
+      "options": [
+        {
+          "label": "Weißes Logo auf Grün",
+          "value": "white"
+        },
+        {
+          "label": "Schwarzes Logo auf Grün (hoher Kontrast)",
+          "value": "black"
+        }
+      ]
+    },
+    {
+      "id": "position",
+      "type": "select",
+      "label": "Position",
+      "default": "right",
+      "options": [
+        {
+          "label": "Unten rechts",
+          "value": "right"
+        },
+        {
+          "label": "Unten links",
+          "value": "left"
+        }
+      ]
+    },
+    {
+      "id": "size",
+      "type": "select",
+      "label": "Größe",
+      "default": "small",
+      "options": [
+        {
+          "label": "Sehr klein (40 px mobil / 44 px Desktop)",
+          "value": "xsmall"
+        },
+        {
+          "label": "Klein (44 px mobil / 48 px Desktop)",
+          "value": "small"
+        },
+        {
+          "label": "Mittel (52 px mobil / 56 px Desktop)",
+          "value": "medium"
+        }
+      ]
+    },
+    {
+      "id": "newTab",
+      "type": "toggle",
+      "label": "In neuem Tab öffnen",
+      "default": true
+    },
+    {
+      "id": "excludeSlugs",
+      "type": "text",
+      "label": "Auf diesen Seiten ausblenden (optional)",
+      "description": "Slugs mit Komma getrennt, z. B. datenschutz, impressum. Die Startseite heißt index."
+    }
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "FilmOrbit",
+    "url": "https://filmorbit.de"
+  },
+  "repository": "https://github.com/Mineorey/instatic-whatsapp-button",
+  "icon": "icon.svg",
+  "keywords": [
+    "whatsapp",
+    "click-to-chat",
+    "kontakt",
+    "button",
+    "instatic"
+  ]
+}

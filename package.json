@@ -1,0 +1,41 @@
+{
+  "name": "instatic-whatsapp-button",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "MIT",
+  "description": "Floating WhatsApp click-to-chat button plugin for the Instatic CMS",
+  "author": {
+    "name": "FilmOrbit",
+    "url": "https://filmorbit.de"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test \"test/unit/*.test.mjs\"",
+    "test:browser": "node --test --test-concurrency=1 \"test/browser/*.test.mjs\""
+  },
+  "devDependencies": {
+    "axe-core": "^4.14.0",
+    "fflate": "^0.8.3",
+    "playwright-core": "^1.64.0"
+  },
+  "homepage": "https://github.com/Mineorey/instatic-whatsapp-button",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mineorey/instatic-whatsapp-button.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Mineorey/instatic-whatsapp-button/issues"
+  },
+  "keywords": [
+    "instatic",
+    "instatic-plugin",
+    "whatsapp",
+    "click-to-chat",
+    "wa.me",
+    "contact-button"
+  ]
+}

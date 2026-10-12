@@ -1,0 +1,163 @@
+/* Floating click-to-chat button and optional info panel. Kept below site
+   navigation, drawers and overlays (z-index 50) so it never covers menus or
+   dialogs. Colours only from the official WhatsApp set (#25D366, #111B21,
+   white) plus neutral greys. */
+.wab, .wab-panel {
+  --wab-size: 44px;
+  --wab-gap: 14px;
+  position: fixed;
+  z-index: 50;
+  right: max(var(--wab-gap), env(safe-area-inset-right));
+  box-sizing: border-box;
+}
+.wab--left { right: auto; left: max(var(--wab-gap), env(safe-area-inset-left)); }
+.wab--xsmall { --wab-size: 40px; }
+.wab--medium { --wab-size: 52px; }
+@media (min-width: 768px) {
+  .wab, .wab-panel { --wab-size: 48px; --wab-gap: 20px; }
+  .wab--xsmall { --wab-size: 44px; }
+  .wab--medium { --wab-size: 56px; }
+}
+
+/* ---- Button (a.wab / .wab-panel prefix: beat site-wide button and [role=button] rules) */
+a.wab {
+  bottom: max(var(--wab-gap), env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--wab-size);
+  height: var(--wab-size);
+  /* sites often give [role=button] a min touch size; ours is set explicitly */
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border-radius: 50%;
+  background: #25d366;
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .22);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.wab__icon { display: block; width: 58%; height: 58%; }
+/* Official black glyph colour; about 9:1 against the green */
+.wab--black { color: #111b21; }
+
+@media (hover: hover) {
+  .wab:hover { transform: scale(1.06); box-shadow: 0 3px 10px rgba(0, 0, 0, .28); }
+}
+.wab:focus, .wab-panel:focus { outline: none; }
+/* border-radius repeated: some sites set a radius on every :focus-visible */
+.wab:focus-visible { outline: 3px solid #1a1a18; outline-offset: 3px; box-shadow: 0 0 0 3px #fff; border-radius: 50%; }
+
+/* ---- Panel (only visible after contact-button.js opened it) */
+.wab-panel {
+  bottom: calc(max(var(--wab-gap), env(safe-area-inset-bottom)) + var(--wab-size) + 12px);
+  width: min(320px, calc(100vw - 2 * var(--wab-gap)));
+  max-height: calc(100vh - var(--wab-size) - 3 * var(--wab-gap) - 12px);
+  max-height: calc(100dvh - var(--wab-size) - 3 * var(--wab-gap) - 12px);
+  overflow: auto;
+  padding: 14px 16px 16px;
+  border-radius: 16px;
+  background: #fff;
+  color: #1a1a18;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .18), 0 2px 6px rgba(0, 0, 0, .1);
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.45;
+  text-align: left;
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(12px) scale(.96);
+  transform-origin: bottom right;
+  transition: opacity .18s ease, transform .2s ease, visibility 0s linear .2s;
+}
+.wab-panel.wab--left { transform-origin: bottom left; }
+.wab-panel[data-ready] { display: block; }
+.wab-panel[data-open] {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  transition: opacity .18s ease, transform .2s ease, visibility 0s;
+}
+.wab-panel:focus-visible { outline: 3px solid #1a1a18; outline-offset: 2px; border-radius: 16px; }
+
+.wab-panel__head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.wab-panel__avatar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #25d366;
+  color: #fff;
+}
+.wab-panel__avatar.wab--black { color: #111b21; }
+.wab-panel__avatar-icon { width: 58%; height: 58%; }
+.wab-panel__title { flex: 1; margin: 0; font-size: 16px; font-weight: 700; line-height: 1.3; }
+.wab-panel .wab-panel__close {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  min-width: 0;
+  min-height: 0;
+  margin: -4px -8px -4px 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #54656f;
+  cursor: pointer;
+}
+.wab-panel .wab-panel__close:hover { background: #f0f2f5; color: #1a1a18; }
+.wab-panel__close:focus-visible { outline: 3px solid #1a1a18; outline-offset: 1px; border-radius: 50%; }
+
+/* chat bubble */
+.wab-panel__bubble {
+  position: relative;
+  margin: 0 0 14px;
+  padding: 10px 12px;
+  border-radius: 4px 12px 12px 12px;
+  background: #f0f2f5;
+}
+.wab-panel__bubble p { margin: 0; }
+.wab-panel__bubble p + p { margin-top: .6em; }
+
+/* dark text on the brand green: 8.8:1 (white would be 2:1) */
+.wab-panel__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: #25d366;
+  color: #111b21;
+  font-weight: 700;
+  text-decoration: none;
+}
+.wab-panel__cta:hover { background: #1fbf5b; color: #111b21; }
+.wab-panel__cta:focus-visible { outline: 3px solid #1a1a18; outline-offset: 2px; border-radius: 999px; }
+.wab-panel__cta-icon { flex: none; width: 20px; height: 20px; }
+
+.wab-panel__privacy { margin: 10px 0 0; font-size: 13px; text-align: center; }
+.wab-panel__privacy a { color: #3b4a54; text-decoration: underline; border-radius: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  a.wab, .wab-panel, .wab-panel[data-open] { transition: none; }
+  .wab:hover { transform: none; }
+  .wab-panel { transform: none; }
+}
+@media (forced-colors: active) {
+  .wab, .wab-panel, .wab-panel__cta { border: 2px solid ButtonText; }
+}
+@media print {
+  .wab, .wab-panel { display: none !important; }
+}
